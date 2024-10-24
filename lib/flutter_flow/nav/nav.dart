@@ -36,91 +36,89 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       initialLocation: '/',
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
-      errorBuilder: (context, state) => StartupScreenWidget(),
+      errorBuilder: (context, state) => const StartupScreenWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) => StartupScreenWidget(),
+          builder: (context, _) => const StartupScreenWidget(),
         ),
         FFRoute(
           name: 'StartupScreen',
           path: '/startupScreen',
-          builder: (context, params) => StartupScreenWidget(),
+          builder: (context, params) => const StartupScreenWidget(),
         ),
         FFRoute(
           name: 'registerlogin',
           path: '/registerlogin',
-          builder: (context, params) => RegisterloginWidget(),
+          builder: (context, params) => const RegisterloginWidget(),
         ),
         FFRoute(
           name: 'home',
           path: '/home',
-          builder: (context, params) => HomeWidget(),
+          builder: (context, params) => const HomeWidget(),
         ),
         FFRoute(
           name: 'settings',
           path: '/settings',
-          builder: (context, params) => SettingsWidget(),
+          builder: (context, params) => const SettingsWidget(),
         ),
         FFRoute(
           name: 'Safetyfeaturedetails',
           path: '/safetyfeaturedetails',
-          builder: (context, params) => SafetyfeaturedetailsWidget(),
+          builder: (context, params) => const SafetyfeaturedetailsWidget(),
         ),
         FFRoute(
           name: 'riskdetails',
           path: '/riskdetails',
-          builder: (context, params) => RiskdetailsWidget(),
+          builder: (context, params) => const RiskdetailsWidget(),
         ),
         FFRoute(
           name: 'riskvisual',
           path: '/riskvisual',
-          builder: (context, params) => RiskvisualWidget(),
+          builder: (context, params) => const RiskvisualWidget(),
         ),
         FFRoute(
           name: 'EmergencyScreen',
           path: '/emergencyScreen',
-          builder: (context, params) => EmergencyScreenWidget(),
+          builder: (context, params) => const EmergencyScreenWidget(),
         ),
         FFRoute(
           name: 'profile',
           path: '/profile',
-          builder: (context, params) => ProfileWidget(),
+          builder: (context, params) => const ProfileWidget(),
         ),
         FFRoute(
           name: 'editprofile',
           path: '/editprofile',
-          builder: (context, params) => EditprofileWidget(),
+          builder: (context, params) => const EditprofileWidget(),
         ),
         FFRoute(
           name: 'worksitedetails',
           path: '/worksitedetails',
-          builder: (context, params) => WorksitedetailsWidget(),
+          builder: (context, params) => const WorksitedetailsWidget(),
         ),
         FFRoute(
           name: 'notifications',
           path: '/notifications',
-          builder: (context, params) => NotificationsWidget(),
+          builder: (context, params) => const NotificationsWidget(),
         ),
         FFRoute(
           name: 'home_SafetyManager',
           path: '/homeSafetyManager',
-          builder: (context, params) => HomeSafetyManagerWidget(),
+          builder: (context, params) => const HomeSafetyManagerWidget(),
         ),
         FFRoute(
           name: 'worksite_list',
           path: '/worksiteList',
-          builder: (context, params) => WorksiteListWidget(),
+          builder: (context, params) => const WorksiteListWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
 
 extension NavParamExtensions on Map<String, String?> {
   Map<String, String> get withoutNulls => Map.fromEntries(
-        entries
-            .where((e) => e.value != null)
-            .map((e) => MapEntry(e.key, e.value!)),
+        entries.where((e) => e.value != null).map((e) => MapEntry(e.key, e.value!)),
       );
 }
 
@@ -137,15 +135,12 @@ extension NavigationExtensions on BuildContext {
 }
 
 extension _GoRouterStateExtensions on GoRouterState {
-  Map<String, dynamic> get extraMap =>
-      extra != null ? extra as Map<String, dynamic> : {};
+  Map<String, dynamic> get extraMap => extra != null ? extra as Map<String, dynamic> : {};
   Map<String, dynamic> get allParams => <String, dynamic>{}
     ..addAll(pathParameters)
     ..addAll(uri.queryParameters)
     ..addAll(extraMap);
-  TransitionInfo get transitionInfo => extraMap.containsKey(kTransitionInfoKey)
-      ? extraMap[kTransitionInfoKey] as TransitionInfo
-      : TransitionInfo.appDefault();
+  TransitionInfo get transitionInfo => extraMap.containsKey(kTransitionInfoKey) ? extraMap[kTransitionInfoKey] as TransitionInfo : TransitionInfo.appDefault();
 }
 
 class FFParameters {
@@ -158,18 +153,13 @@ class FFParameters {
 
   // Parameters are empty if the params map is empty or if the only parameter
   // present is the special extra parameter reserved for the transition info.
-  bool get isEmpty =>
-      state.allParams.isEmpty ||
-      (state.allParams.length == 1 &&
-          state.extraMap.containsKey(kTransitionInfoKey));
-  bool isAsyncParam(MapEntry<String, dynamic> param) =>
-      asyncParams.containsKey(param.key) && param.value is String;
+  bool get isEmpty => state.allParams.isEmpty || (state.allParams.length == 1 && state.extraMap.containsKey(kTransitionInfoKey));
+  bool isAsyncParam(MapEntry<String, dynamic> param) => asyncParams.containsKey(param.key) && param.value is String;
   bool get hasFutures => state.allParams.entries.any(isAsyncParam);
   Future<bool> completeFutures() => Future.wait(
         state.allParams.entries.where(isAsyncParam).map(
           (param) async {
-            final doc = await asyncParams[param.key]!(param.value)
-                .onError((_, __) => null);
+            final doc = await asyncParams[param.key]!(param.value).onError((_, __) => null);
             if (doc != null) {
               futureParamValues[param.key] = doc;
               return true;
@@ -241,9 +231,7 @@ class FFRoute {
                   key: state.pageKey,
                   child: child,
                   transitionDuration: transitionInfo.duration,
-                  transitionsBuilder:
-                      (context, animation, secondaryAnimation, child) =>
-                          PageTransition(
+                  transitionsBuilder: (context, animation, secondaryAnimation, child) => PageTransition(
                     type: transitionInfo.transitionType,
                     duration: transitionInfo.duration,
                     reverseDuration: transitionInfo.duration,
@@ -275,7 +263,7 @@ class TransitionInfo {
   final Duration duration;
   final Alignment? alignment;
 
-  static TransitionInfo appDefault() => TransitionInfo(hasTransition: false);
+  static TransitionInfo appDefault() => const TransitionInfo(hasTransition: false);
 }
 
 class RootPageContext {
@@ -287,9 +275,7 @@ class RootPageContext {
     final rootPageContext = context.read<RootPageContext?>();
     final isRootPage = rootPageContext?.isRootPage ?? false;
     final location = GoRouterState.of(context).uri.toString();
-    return isRootPage &&
-        location != '/' &&
-        location != rootPageContext?.errorRoute;
+    return isRootPage && location != '/' && location != rootPageContext?.errorRoute;
   }
 
   static Widget wrap(Widget child, {String? errorRoute}) => Provider.value(
@@ -301,9 +287,7 @@ class RootPageContext {
 extension GoRouterLocationExtension on GoRouter {
   String getCurrentLocation() {
     final RouteMatch lastMatch = routerDelegate.currentConfiguration.last;
-    final RouteMatchList matchList = lastMatch is ImperativeRouteMatch
-        ? lastMatch.matches
-        : routerDelegate.currentConfiguration;
+    final RouteMatchList matchList = lastMatch is ImperativeRouteMatch ? lastMatch.matches : routerDelegate.currentConfiguration;
     return matchList.uri.toString();
   }
 }

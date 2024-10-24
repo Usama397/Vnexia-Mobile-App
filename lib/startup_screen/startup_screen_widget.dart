@@ -39,17 +39,17 @@ class _StartupScreenWidgetState extends State<StartupScreenWidget> {
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        body: Container(
+        body: SizedBox(
           width: MediaQuery.sizeOf(context).width * 1.0,
           height: MediaQuery.sizeOf(context).height * 1.0,
           child: Stack(
             children: [
               Align(
-                alignment: AlignmentDirectional(0.0, 0.0),
+                alignment: const AlignmentDirectional(0.0, 0.0),
                 child: Container(
                   width: MediaQuery.sizeOf(context).width * 1.0,
                   height: MediaQuery.sizeOf(context).height * 1.0,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     boxShadow: [
                       BoxShadow(
                         blurRadius: 4.0,
@@ -76,10 +76,9 @@ class _StartupScreenWidgetState extends State<StartupScreenWidget> {
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(-0.05, 0.0),
+                alignment: const AlignmentDirectional(-0.05, 0.0),
                 child: Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(24.0, 24.0, 24.0, 24.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(24.0, 24.0, 24.0, 24.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -94,7 +93,7 @@ class _StartupScreenWidgetState extends State<StartupScreenWidget> {
                           fit: BoxFit.fitWidth,
                         ),
                       ),
-                      Container(
+                      SizedBox(
                         width: 60.0,
                         height: 60.0,
                         child: ClipRRect(
@@ -107,16 +106,15 @@ class _StartupScreenWidgetState extends State<StartupScreenWidget> {
                           ),
                         ),
                       ),
-                    ].divide(SizedBox(height: 24.0)),
+                    ].divide(const SizedBox(height: 24.0)),
                   ),
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(0.0, 1.0),
+                alignment: const AlignmentDirectional(0.0, 1.0),
                 child: Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(24.0, 24.0, 40.0, 24.0),
-                  child: Container(
+                  padding: const EdgeInsetsDirectional.fromSTEB(24.0, 24.0, 40.0, 24.0),
+                  child: SizedBox(
                     width: MediaQuery.sizeOf(context).width * 1.0,
                     child: Text(
                       'Ensuring a safer tomorrow, today.',
